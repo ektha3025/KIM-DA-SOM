@@ -1,0 +1,350 @@
+go athena
+
+line x location=0  spacing=0.05
+line x location=0.06  spacing=0.01
+line x location=0.11  spacing=0.01
+line x location=0.13  spacing=0.01
+line x location=0.2  spacing=0.01
+line x location=0.23  spacing=0.01
+line x location=0.3  spacing=0.01
+line x location=0.5  spacing=0.01
+line x location=0.6  spacing=0.01
+line x location=0.7  spacing=0.01
+line x location=0.78  spacing=0.01
+line x location=0.8  spacing=0.01
+line x location=0.83  spacing=0.01
+line x location=0.85  spacing=0.01
+line x location=1  spacing=0.03
+line x location=1.15  spacing=0.03
+line x location=1.35   spacing=0.03
+line x location=1.4 spacing=0.1
+
+line y location=0 spacing=0.1
+line y location=0.4 spacing=0.1
+line y location=0.6 spacing=0.1
+line y location=0.8 spacing=0.1
+line y location=1.0 spacing=0.1
+line y location=1.2 spacing=0.1
+line y location=1.4 spacing=0.1
+line y location=1.6 spacing=0.2
+
+
+
+init silicon c.boron=1.0e16 orientation=100
+
+method full.cpl
+
+epitaxy time=1 temp=1050 thickness=1 divisions=8 dy=0.1 ydy=1 \
+        c.boron=1e14
+epitaxy time=1 temp=1050 thickness=1 divisions=16 dy=0.002 ydy=0 \
+        c.boron=1e14
+
+
+etch silicon  start x=0 y=-1
+etch                 cont  x=0 y=0
+etch                 cont  x=2 y=0
+etch                 done  x=2 y=-1
+
+
+#p-well
+deposit barrier thick=0.03 divisions=3
+etch barrier  start x=0.06 y=-1
+etch                 cont  x=0.06 y=0
+etch                 cont  x=0.1 y=0
+etch                 done  x=0.1 y=-1
+etch barrier right p1.x=1.75
+#implant boron energy=150 dose=2e13 tilt=0 rotation=0 bca n.ion=200
+#implant boron energy=150 dose=2.4e13 tilt=0 rotation=0 bca n.ion=150
+implant boron energy=170  dose=1.2e13 tilt=0 rotation=0 bca n.ion=200
+etch barrier all
+
+
+method full.cpl grid.ox=0.003
+
+
+#STI
+deposit oxide thick=0.006 divisions=3
+diffus time=1 temperature=1050 nitro
+
+deposit material=photoresist thick=0.5 divisions=5
+
+etch photoresist start x=0.01 y=-3
+etch        cont  x=0.01  y=3
+etch    cont x=0.06 y=3
+etch       done x=0.06 y=-3
+
+etch photoresist start x=1.35 y=-3
+etch        cont  x=1.35  y=3
+etch    cont x=1.4 y=3
+etch       done x=1.4 y=-3
+
+
+etch oxide start x=0.01 y=-0.006
+etch        cont  x=0.01  y=0
+etch    cont x=0.06 y=0
+etch       done x=0.06 y=-0.006
+
+etch oxide start x=1.35 y=-0.006
+etch        cont  x=1.35  y=0
+etch    cont x=1.4 y=0
+etch       done x=1.4 y=-0.006
+
+
+etch silicon start x=0.01 y=0
+etch        cont  x=0.01  y=0.3
+etch    cont x=0.06 y=0.3
+etch       done x=0.06 y=0
+
+etch silicon start x=1.35 y=0
+etch        cont  x=1.35  y=0.3
+etch    cont x=1.4 y=0.3
+etch       done x=1.4 y=0
+
+
+deposit oxide thick=1
+
+etch material=oxide  start x=0 y=-1
+etch                 cont  x=0 y=0
+etch                 cont  x=2 y=0
+etch                 done  x=2 y=-1
+
+
+
+#PD
+etch silicon         start x=0.06  y=-1
+etch                 cont  x=0.06  y=0.8
+etch                 cont  x=0.11 y=0.8
+etch                 done  x=0.11 y=-1
+
+etch material=silicon  start x=0.8 y=-1
+etch                 cont  x=0.8 y=0.8
+etch                 cont  x=0.85 y=0.8
+etch                 done  x=0.85 y=-1
+
+etch silicon         start x=0  y=-1
+etch                 cont  x=0 y=0
+etch                 cont  x=1.4 y=0
+etch                 done  x=1.4 y=-1
+
+deposit barrier thick=0.01 divisions=3
+
+etch barrier  start x=0.11 y=-1
+etch          cont  x=0.11 y=1
+etch          cont  x=0.8 y=1
+etch          done  x=0.8 y=-1
+
+implant ars dose=5e12 energy=90 tilt=7 pearson
+implant ars dose=4e12 energy=90 tilt=7 pearson
+implant ars dose=3e12 energy=90 tilt=7 pearson
+#implant ars dose=3e14 energy=25 tilt=7 pearson
+#implant ars dose=5e14 energy=20 tilt=7 pearson
+#implant ars dose=5e14 energy=20 tilt=7 pearson
+#implant ars dose=3e14 energy=15 tilt=7 pearson
+#implant ars dose=3e14 energy=25 tilt=7 pearson
+
+
+#diffuse time=6 temp=1200 press=1.0
+
+#implant ars dose=4e12 energy=250 tilt=6 pearson
+#implant ars dose=3e12 energy=150 tilt=6 pearson
+#implant ars dose=2e12 energy=150 tilt=6 pearson
+#implant ars dose=1e12 energy=150 tilt=6 pearson
+
+diffuse time=19 temp=1200 press=1.0
+
+
+
+#p+
+
+#etch silicon         start x=0  y=-1
+#etch                 cont  x=0  y=0
+#etch                 cont  x=1.4 y=0
+#etch                 done  x=1.4 y=-1
+
+
+#deposit barrier thick=0.03 divisions=3
+
+
+#etch barrier  start x=0.1 y=-1
+#etch          cont  x=0.1 y=0
+#etch          cont  x=0.15 y=0
+#etch          done  x=0.15 y=-1
+
+#etch barrier  start x=0 y=-2
+#etch          cont  x=0 y=-0.3
+#etch          cont  x=1.4 y=-0.3
+#etch          done  x=1.4 y=-2
+
+#implant boron dose=5e13 energy=50 tilt=7 pearson
+#implant boron dose=4e15 energy=30 tilt=7 pearson
+#implant boron dose=3e15 energy=30 tilt=7 pearson
+#implant boron dose=2e15 energy=16 tilt=7 pearson
+#implant boron dose=1e15 energy=15 tilt=7 pearson
+
+
+#diffuse time=10 temp=1000 press=1.0
+#diffuse time=10 temp=1200 press=1.0
+#diffuse time=7 temp=1200 press=1.0
+#diffuse time=5 temp=900 press=1.0
+
+#passivation
+
+etch barrier left p1.x=0.85
+etch barrier  start x=0 y=-1
+etch          cont  x=0 y=0
+etch          cont  x=1.4 y=0
+etch          done  x=1.4 y=0
+
+
+deposit silicon thick=0.05 divisions=3
+
+etch silicon         start x=0  y=-1
+etch                 cont  x=0  y=0
+etch                 cont  x=1.4 y=0
+etch                 done  x=1.4 y=-1
+
+deposit barrier thick=0.05 divisions=3
+
+etch barrier  start x=0.1 y=-1
+etch          cont  x=0.1 y=0
+etch          cont  x=0.78 y=0
+etch          done  x=0.78 y=-1
+implant boron dose=3e13 energy=10 tilt=7 pearson
+implant boron dose=2e13 energy=10 tilt=7 pearson
+implant boron dose=1e13 energy=9 tilt=7 pearson
+
+
+diffuse time=7 temp=900 press=1.0
+
+#FD
+
+etch barrier  start x=0 y=-1
+etch          cont  x=0 y=0
+etch          cont  x=1.4 y=0
+etch          done  x=1.4 y=-1
+
+
+
+etch silicon         start x=1.1  y=-1
+etch                 cont  x=1.1  y=0.2
+etch                 cont  x=1.15 y=0.2
+etch                 done  x=1.15 y=-1
+
+deposit barrier thick=0.03 divisions=3
+
+etch barrier  start x=1.15 y=-1
+etch          cont  x=1.15 y=1
+etch          cont  x=1.35 y=1
+etch          done  x=1.35 y=-1
+
+implant ars dose=4e14 energy=20 tilt=7 pearson
+implant ars dose=3e14 energy=40 tilt=7 pearson
+implant ars dose=2e14 energy=30 tilt=7 pearson
+
+diffuse time=5 temp=900 press=1.0
+
+
+
+
+#
+etch barrier all
+etch silicon         start x=0  y=-1
+etch                 cont  x=0  y=0
+etch                 cont  x=1.4 y=0
+etch                 done  x=1.4 y=-1
+
+deposit silicon thick=0.05 divisions=3
+
+etch silicon         start x=0  y=-1
+etch                 cont  x=0  y=0
+etch                 cont  x=1.4 y=0
+etch                 done  x=1.4 y=-1
+
+
+
+#TG
+deposit oxide thick=0.006 divisions=3
+deposit polysilicon thickness=0.1 divisions=10 dy=0.005 ydy=0.1
+deposit polysilicon thickness=0.1 divisions=10 dy=0.005 ydy=0  
+etch polysilicon left p1.x=0.8
+etch polysilicon right p1.x=1.1
+deposit oxide thick=0.006 divisions=3
+
+
+struct outfile=cis_basic.str
+
+go atlas
+
+
+#electrode
+elec num=1 name=TG x.min=0.8 x.max=1.1 y.min=0 y.max=0
+elec num=2 name=FD x.min=1.1 x.max=1.35 y.min=0 y.max=0
+elec num=3 name=Body x.min=0 x.max=1.4 y.min=1.6 y.max=1.6
+contact num=1 neutral
+contact num=2 neutral
+contact num=3 neutral
+
+
+models conmob srh auger bgn fldmob cvt fermi
+
+
+method newton trap autonr
+output con.band val.band
+
+probe name=elec_pd x=0.2 y=0.85 n.conc
+probe name=elec_fd x=1.2 y=0.1 n.conc
+
+solve init
+solve prev
+
+
+solve vdrain=3.3 name=FD
+save outf=cis_basic_1.str
+log outf=cis_basic_1.log master
+
+solve vgate=0 name=TG
+save outf=basic_carrier_off.str
+
+solve vgate=3.3 name=TG
+save outf=basic_carrier_on.str
+
+solve vgate=0 vstep=0.1 vfinal=3.3 name=TG
+log outf=basic_vtg_sweep.log
+save outf=2.str
+
+
+solve vgate=7 vstep=-0.1 vfinal=0 name=TG
+log outf=3.log
+save outf=3.str
+
+
+solve vgate=0.0 vstep=0.1 vfinal=0.5 name=TG
+log outf=4.log
+save outf=4.str
+
+
+solve vgate=0.5 vstep=0.1 vfinal=1.0 name=TG
+log outf=5.log
+save outf=5.str
+
+
+solve vgate=1.0 vstep=0.1 vfinal=1.5 name=TG
+log outf=6.log
+save outf=6.str
+
+
+solve vgate=1.5 vstep=0.1 vfinal=2.0 name=TG
+log outf=7.log
+save outf=7.str
+
+
+solve vgate=2.0 vstep=0.1 vfinal=2.5 name=TG
+log outf=8.log
+save outf=8.str
+
+
+solve vgate=2.5 vstep=0.1 vfinal=3.0 name=TG
+log outf=9.log
+save outf=9.str
+
+quit
